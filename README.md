@@ -15,6 +15,10 @@ A sleek and modern to-do list application built with React and Tailwind CSS. The
 - Tailwind CSS
 - Google Fonts (Inter)
 
+## Live Demo
+
+[Live Demo](https://varungaikwad.github.io/drag-and-drop-todo/)
+
 ## Example Screenshot
 
 ![Screenshot](./screenshot/page.png)
