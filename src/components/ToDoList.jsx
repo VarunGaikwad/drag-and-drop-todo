@@ -11,12 +11,14 @@ ToDoList.propTypes = {
   inputValue: PropTypes.string.isRequired,
   setInputValue: PropTypes.func.isRequired,
   submitHandler: PropTypes.func.isRequired,
+  itemDrop: PropTypes.func.isRequired,
 };
 export default function ToDoList({
   todos,
   inputValue,
   setInputValue,
   submitHandler,
+  itemDrop,
 }) {
   const [todoList, inProgressList, doneList] = useSeperateState(todos);
 
@@ -37,9 +39,13 @@ export default function ToDoList({
         </button>
       </div>
       <div className="mt-4 flex-grow flex gap-4">
-        <TypeList title={"To Do"} list={todoList} />
-        <TypeList title={"In Progress"} list={inProgressList} />
-        <TypeList title={"Done"} list={doneList} />
+        <TypeList title={"To Do"} list={todoList} itemDrop={itemDrop} />
+        <TypeList
+          title={"In Progress"}
+          list={inProgressList}
+          itemDrop={itemDrop}
+        />
+        <TypeList title={"Done"} list={doneList} itemDrop={itemDrop} />
       </div>
     </div>
   );
@@ -54,23 +60,23 @@ TypeList.propTypes = {
       status: PropTypes.string.isRequired,
     })
   ).isRequired,
+  itemDrop: PropTypes.func.isRequired,
 };
 
-function TypeList({ title, list }) {
+function TypeList({ title, list, itemDrop }) {
   return (
     <div
       onDragOver={(oEvent) => oEvent.preventDefault()}
       onDrop={(oEvent) => {
-        alert(oEvent.dataTransfer.getData("id"));
+        itemDrop(oEvent.dataTransfer.getData("id"), title);
       }}
       className="flex border-2 w-1/3 h-full rounded-lg flex-col"
     >
       <div className="p-4 text-4xl font-semibold">{title}</div>
-      <div>
+      <div className="flex-1 overflow-y-scroll">
         {list.map((item) => (
           <div
-            onDrag={(oEvent) => {
-              console.log(item.id);
+            onDragStart={(oEvent) => {
               oEvent.dataTransfer.setData("id", item.id);
             }}
             draggable
