@@ -17,7 +17,7 @@ A sleek and modern to-do list application built with React and Tailwind CSS. The
 
 ## Example Screenshot
 
-![Screenshot](screenshots/page.png)
+![Screenshot](./screenshot/page.png)
 
 ## Getting Started
 
