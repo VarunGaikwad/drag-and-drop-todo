@@ -15,6 +15,10 @@ A sleek and modern to-do list application built with React and Tailwind CSS. The
 - Tailwind CSS
 - Google Fonts (Inter)
 
+## Example Screenshot
+
+![Screenshot](screenshots/page.png)
+
 ## Getting Started
 
 Follow these instructions to get a copy of the project up and running on your local machine.
