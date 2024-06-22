@@ -13,6 +13,7 @@ ToDoList.propTypes = {
   submitHandler: PropTypes.func.isRequired,
   itemDrop: PropTypes.func.isRequired,
 };
+
 export default function ToDoList({
   todos,
   inputValue,
@@ -23,22 +24,25 @@ export default function ToDoList({
   const [todoList, inProgressList, doneList] = useSeperateState(todos);
 
   return (
-    <div className="h-screen w-screen bg-black text-white p-4 flex flex-col">
-      <div className="text-7xl font-bold tracking-wide">TO DO LIST</div>
-      <div className="flex gap-4 mt-4">
+    <div className="min-h-screen w-screen bg-gradient-to-r from-gray-900 via-purple-900 to-black text-white p-4 md:p-8 flex flex-col items-center">
+      <div className="text-4xl md:text-6xl font-bold tracking-wider mb-4 md:mb-8 drop-shadow-lg">
+        TO DO LIST
+      </div>
+      <div className="flex flex-col md:flex-row gap-4 mb-4 md:mb-8 w-full max-w-3xl">
         <input
           value={inputValue}
           onChange={(oEvent) => setInputValue(oEvent.target.value)}
-          className="text-3xl bg-white bg-opacity-15 p-2 rounded-2xl"
+          className="flex-grow text-lg md:text-2xl bg-white bg-opacity-15 p-3 md:p-4 rounded-2xl border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+          placeholder="Enter a task..."
         />
         <button
           onClick={submitHandler}
-          className="text-3xl bg-white bg-opacity-15 p-2 rounded-2xl transition-all duration-500 ease-in-out hover:bg-opacity-100 hover:text-black"
+          className="text-lg md:text-2xl bg-purple-600 text-white p-3 md:p-4 rounded-2xl shadow-lg transition-all duration-500 ease-in-out hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           Add Task
         </button>
       </div>
-      <div className="mt-4 flex-grow flex gap-4">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-8 flex-1 w-full max-w-7xl">
         <TypeList title={"To Do"} list={todoList} itemDrop={itemDrop} />
         <TypeList
           title={"In Progress"}
@@ -49,6 +53,22 @@ export default function ToDoList({
       </div>
     </div>
   );
+}
+
+function useSeperateState(todos) {
+  const todoList = [],
+    inProgressList = [],
+    doneList = [];
+  todos.forEach((todo) => {
+    if (todo.status === "to-do") {
+      todoList.push(todo);
+    } else if (todo.status === "in-progress") {
+      inProgressList.push(todo);
+    } else if (todo.status === "done") {
+      doneList.push(todo);
+    }
+  });
+  return [todoList, inProgressList, doneList];
 }
 
 TypeList.propTypes = {
@@ -70,10 +90,12 @@ function TypeList({ title, list, itemDrop }) {
       onDrop={(oEvent) => {
         itemDrop(oEvent.dataTransfer.getData("id"), title);
       }}
-      className="flex border-2 w-1/3 h-full rounded-lg flex-col"
+      className="flex border-2 border-gray-700 w-full md:w-1/3 rounded-lg flex-col bg-gray-800 shadow-lg"
     >
-      <div className="p-4 text-4xl font-semibold">{title}</div>
-      <div className="flex-1 overflow-y-scroll">
+      <div className="p-4 text-2xl md:text-3xl font-semibold text-center border-b border-gray-700">
+        {title}
+      </div>
+      <div className="flex-grow overflow-y-auto h-48 md:h-96 p-2">
         {list.map((item) => (
           <div
             onDragStart={(oEvent) => {
@@ -81,7 +103,7 @@ function TypeList({ title, list, itemDrop }) {
             }}
             draggable
             key={item.id}
-            className="p-4 text-2xl"
+            className="p-4 text-lg md:text-xl bg-gray-700 rounded-lg mb-2 cursor-move hover:bg-gray-600 transition-all shadow-sm"
           >
             {item.text}
           </div>
@@ -89,20 +111,4 @@ function TypeList({ title, list, itemDrop }) {
       </div>
     </div>
   );
-}
-
-function useSeperateState(todos) {
-  const todoList = [],
-    inProgressList = [],
-    doneList = [];
-  todos.forEach((todo) => {
-    if (todo.status === "to-do") {
-      todoList.push(todo);
-    } else if (todo.status === "in-progress") {
-      inProgressList.push(todo);
-    } else if (todo.status === "done") {
-      doneList.push(todo);
-    }
-  });
-  return [todoList, inProgressList, doneList];
 }
