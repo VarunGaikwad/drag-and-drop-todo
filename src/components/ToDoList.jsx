@@ -24,7 +24,7 @@ export default function ToDoList({
   const [todoList, inProgressList, doneList] = useSeperateState(todos);
 
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-r from-gray-900 via-purple-900 to-black text-white p-4 md:p-8 flex flex-col items-center">
+    <div className="select-none min-h-screen w-screen bg-gradient-to-r from-gray-900 via-purple-900 to-black text-white p-4 md:p-8 flex flex-col items-center">
       <div className="text-4xl md:text-6xl font-bold tracking-wider mb-4 md:mb-8 drop-shadow-lg">
         TO DO LIST
       </div>
