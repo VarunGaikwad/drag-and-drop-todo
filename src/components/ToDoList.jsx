@@ -26,7 +26,7 @@ export default function ToDoList({
       <div className="flex gap-4 mt-4">
         <input
           value={inputValue}
-          onChange={() => setInputValue(event.target.value)}
+          onChange={(oEvent) => setInputValue(oEvent.target.value)}
           className="text-3xl bg-white bg-opacity-15 p-2 rounded-2xl"
         />
         <button
